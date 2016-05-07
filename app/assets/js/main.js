@@ -38,7 +38,7 @@
 
     light = new THREE.DirectionalLight(0xffffff);
     light.intensity = 0.17;
-    light.position.set(0, 100, 60);
+    light.position.set(0, 100, 200);
     light.castShadow = true;
     light.shadowCameraLeft = -2;
     light.shadowCameraTop = -2;
@@ -52,8 +52,8 @@
     // light.shadow.bias = 1;
 
 
-    var ambient = new THREE.AmbientLight( 0xf9f9f9 );
-    var point = new THREE.PointLight( 0x888888 );
+    var ambient = new THREE.AmbientLight( 0xFFFFFF);
+    var point = new THREE.PointLight( 0xFFFFFF, 0.3, 1000 );
     // point.castShadow = true;
     point.shadowCameraLeft = -2;
     point.shadowCameraTop = -2;
@@ -62,15 +62,15 @@
     point.shadowCameraNear = 1;
     point.shadowCameraFar = 1000;
     point.shadowBias = -.0001
-    point.shadowMapWidth = point.shadowMapHeight = 1024;
+    point.shadowMapWidth = point.shadowMapHeight = 512;
     point.shadowDarkness = .001;
-    point.intensity = 0.9;
-    ambient.intensity = 0.9;
+    // point.intensity = 0.9;
+    ambient.intensity = 0.8;
     scene.add(light);
     scene.add(ambient, point);
     point.position.x = 1;
-    point.position.y = 0.1;
-    point.position.z = 2;
+    point.position.y = 3;
+    point.position.z = 5;
     loader = new THREE.JSONLoader();
     var mesh, container;
     var floor_geometry = new THREE.BoxGeometry( 10, 0.05, 10);
