@@ -30,7 +30,7 @@
     container.appendChild(renderer.domElement);
 
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-
+    mirrorCamera = new THREE.CubeCamera( 1, 10, 1024);
     camera.position.set(0, 2 ,7);
     camera.rotation.x = -Math.PI / 12;
 
@@ -45,14 +45,14 @@
 
     light = new THREE.DirectionalLight(0xffffff);
     light.intensity = 0.17;
-    light.position.set(0, 100, 200);
+    light.position.set(-170, 100, 80);
     light.castShadow = true;
-    light.shadowCameraLeft = -2;
-    light.shadowCameraTop = -2;
+    light.shadowCameraLeft = -3;
+    light.shadowCameraTop = -3;
     light.shadowCameraRight = 2;
     light.shadowCameraBottom = 2;
     light.shadowCameraNear = 1;
-    light.shadowCameraFar = 1000;
+    light.shadowCameraFar = 400;
     light.shadowBias = -.0001
     light.shadowMapWidth = light.shadowMapHeight = 1024;
     light.shadowDarkness = .001;
@@ -72,28 +72,27 @@
     point.shadowMapWidth = point.shadowMapHeight = 256;
     point.shadowDarkness = .001;
     // point.intensity = 0.9;
-    ambient.intensity = 0.8;
+    ambient.intensity = 0.9;
     scene.add(light);
     scene.add(ambient, point);
     point.position.x = 1;
     point.position.y = 3;
     point.position.z = 5;
     loader = new THREE.JSONLoader();
+    scene.add(mirrorCamera);
     var mesh, container;
-    var floor_geometry = new THREE.BoxGeometry( 10, 0.05, 10);
-    var floor_material = new THREE.MeshLambertMaterial( {
-      color: 0xFFFFFF
-    });
+    var maxAnisotropy = renderer.getMaxAnisotropy();
+    var floor_geometry = new THREE.BoxGeometry( 10, 0.001, 10);
+    var floor_material = new THREE.MeshBasicMaterial( { envMap: mirrorCamera.renderTarget } );
 
-    //
-    // var textShapes = THREE.FontUtils.generateShapes( text, options );
-    // var text = new THREE.ShapeGeometry( textShapes );
-    // var textMesh = new THREE.Mesh( text, new THREE.MeshBasicMaterial( { color: 0xff0000 } ) ) ;
-    // scene.add(textMesh);
-    // var line_geometry = new THREE.BoxGeometry(0.006, 0.006, 1);
-    // var line_material = new THREE.MeshLambertMaterial({color: 0x000000});
-
-    // var line = new THREE.Mesh(line_geometry, line_material);
+        var planeGeo = new THREE.PlaneBufferGeometry( 100.1, 100.1 );
+        var groundMirror = new THREE.Mirror( renderer, camera, { clipBias: 1, textureWidth: WIDTH, textureHeight: HEIGHT, color: 0xECECEC } );
+        var texture = groundMirror.material;
+        texture.anisotropy = maxAnisotropy;
+        var mirrorMesh = new THREE.Mesh( planeGeo, texture );
+				mirrorMesh.add( groundMirror );
+				mirrorMesh.rotateX( - Math.PI / 2 );
+				scene.add( mirrorMesh );
 
 
 
@@ -109,13 +108,8 @@
         geometry,
         material
       );
-          // var line_geometry  = new THREE.BoxGeometry( 0.5, 5, 5);
-          // var line_material = new THREE.MeshBasicMaterial( { color: 0x000000, transparent: true } );
-          // // var line = new THREE.Mesh( line_geometry, line_material );
-          // var  edges = new THREE.FaceNormalsHelper( line, 2, 0x00ff00, 1 );
-          //
-          // mesh.add(line);
-          // line.add(edges);
+      scene.add(mesh);
+
 
           var material = new THREE.LineBasicMaterial({
           	color: 0x0000ff
@@ -200,6 +194,12 @@
         floor_geometry,
         floor_material
       );
+      mirrorCamera.position = floor.position;
+      // mirrorCamera.rotation.x = Math.PI /2;
+      // mirrorCamera.position.y =
+      scene.add( new THREE.CameraHelper( light.shadow.camera ) );
+      // scene.add( new THREE.CameraHelper( mirrorCamera) );
+
       camera.position.z = 15
       floor.receiveShadow = true;
       camera.lookAt(0,0,0);
@@ -210,20 +210,34 @@
       mesh.rotation.y = 0;
       mesh.position.x = -1;
       mesh.position.z= -1;
-      // mesh.position.y = 1;
-      floor.add(mesh);
+// mesh.position.set(-170, 100, 80);      // mesh.position.y = 1;
+
       // mesh.add(line);
       scene.add(floor);
-      floor.rotation.y = 9.379999999999844;
+      // floor.rotation.y = 9.379999999999844;
       scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
       // line.position.set(2, 2.6, -1.34);
       render();
     });
-
     function render() {
      var time = clock.getElapsedTime();
     //  mesh.rotation.y += .01;
 
-     renderer.render(scene, camera);
+      // floor.visible = false;
+    	// mirrorCamera.updateCubeMap( renderer, scene );
+    	floor.visible = true;
+      // renderer.render(scene, camera);
+
+      floor.visible = false;
+      mirrorCamera.position.copy( floor.position );
+      mirrorCamera.rotation.set (0,0,0);
+      // mirrorCamera.rotation = floor.rotation;
+      // mirrorCamera.updateTextureMatrix();
+
+      //Render the scene
+      groundMirror.updateTextureMatrix();
+      groundMirror.render();
+      renderer.render( scene, camera );
+
      requestAnimationFrame(render);
     }
