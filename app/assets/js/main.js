@@ -45,7 +45,7 @@
 
     light = new THREE.DirectionalLight(0xffffff);
     light.intensity = 0.17;
-    light.position.set(-170, 100, 80);
+    light.position.set(100, 100, -150);
     light.castShadow = true;
     light.shadowCameraLeft = -3;
     light.shadowCameraTop = -3;
@@ -93,16 +93,21 @@
 				mirrorMesh.add( groundMirror );
 				mirrorMesh.rotateX( - Math.PI / 2 );
 				scene.add( mirrorMesh );
-
-
+    var currentTexture = 0;
+    var textures = ['black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
+    var mainTexture = textures[currentTexture];
+    texture.needsUpdate = true;
+    function changeTexture(){
+      currentTexture++;
+      currentTexture = currentTexture % textures.length;
+      mainTexture = textures[currentTexture];
+      mesh.material.map = THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture);
+    }
 
     loader.load('assets/models/stand.json', function (geometry, materials) {
       var material = new THREE.MeshLambertMaterial({
-        // map: THREE.ImageUtils.loadTexture('/js/threejs/models/textures/gtare.jpg'),
-        // colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
-        // colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
-        // colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
-        color: 0xCCCCCC
+        map: THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture),
+        // color: 0xCCCCCC
       });
       mesh = new THREE.Mesh(
         geometry,
@@ -110,86 +115,86 @@
       );
       scene.add(mesh);
 
-
-          var material = new THREE.LineBasicMaterial({
-          	color: 0x0000ff
-          });
-
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-          	new THREE.Vector3( 0.12, -0.253, -0.9 ),
-          	new THREE.Vector3( 0.12, -0.253,-1.05 )
-          	// new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-	        mesh.add(line);
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3( 0.12, 2.57,  -0.9 ),
-            new THREE.Vector3( 0.12, 2.57,-1.05 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(2.084, 2.57,  -0.9 ),
-            new THREE.Vector3( 2.084, 2.57,-1.05 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(2.084, -0.253,  -0.9 ),
-            new THREE.Vector3( 2.084, -0.253,-1.05 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(0.12, 2.57,  -1 ),
-            new THREE.Vector3( 2.084, 2.57,-1 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(0.12, -0.253,  -1 ),
-            new THREE.Vector3( 0.12, 2.57,-1 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(0.12, -0.3,  -0.87 ),
-            new THREE.Vector3( 0.12, -0.48,-0.87 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(0.12, -0.3,  -0.031 ),
-            new THREE.Vector3( 0.12, -0.48,-0.031 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
-
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(
-            new THREE.Vector3(0.12, -0.42,  -0 ),
-            new THREE.Vector3( 0.12, -0.42, -0.87 )
-            // new THREE.Vector3( 0, 0, 0 )
-          );
-          var line = new THREE.Line( geometry, material );
-          mesh.add(line);
+          // LINES
+          // var material = new THREE.LineBasicMaterial({
+          // 	color: 0x0000ff
+          // });
+          //
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          // 	new THREE.Vector3( 0.12, -0.253, -0.9 ),
+          // 	new THREE.Vector3( 0.12, -0.253,-1.05 )
+          // 	// new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+	        // mesh.add(line);
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3( 0.12, 2.57,  -0.9 ),
+          //   new THREE.Vector3( 0.12, 2.57,-1.05 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(2.084, 2.57,  -0.9 ),
+          //   new THREE.Vector3( 2.084, 2.57,-1.05 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(2.084, -0.253,  -0.9 ),
+          //   new THREE.Vector3( 2.084, -0.253,-1.05 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(0.12, 2.57,  -1 ),
+          //   new THREE.Vector3( 2.084, 2.57,-1 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(0.12, -0.253,  -1 ),
+          //   new THREE.Vector3( 0.12, 2.57,-1 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          //
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(0.12, -0.3,  -0.87 ),
+          //   new THREE.Vector3( 0.12, -0.48,-0.87 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          //
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(0.12, -0.3,  -0.031 ),
+          //   new THREE.Vector3( 0.12, -0.48,-0.031 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
+          //
+          // var geometry = new THREE.Geometry();
+          // geometry.vertices.push(
+          //   new THREE.Vector3(0.12, -0.42,  -0 ),
+          //   new THREE.Vector3( 0.12, -0.42, -0.87 )
+          //   // new THREE.Vector3( 0, 0, 0 )
+          // );
+          // var line = new THREE.Line( geometry, material );
+          // mesh.add(line);
       floor = new THREE.Mesh(
         floor_geometry,
         floor_material
@@ -197,7 +202,7 @@
       mirrorCamera.position = floor.position;
       // mirrorCamera.rotation.x = Math.PI /2;
       // mirrorCamera.position.y =
-      scene.add( new THREE.CameraHelper( light.shadow.camera ) );
+      // scene.add( new THREE.CameraHelper( light.shadow.camera ) );
       // scene.add( new THREE.CameraHelper( mirrorCamera) );
 
       camera.position.z = 15
