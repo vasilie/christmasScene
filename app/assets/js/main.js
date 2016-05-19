@@ -96,7 +96,7 @@
 				scene.add( mirrorMesh );
     var currentTexture = 0;
     var images = [];
-    var textures = ['black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
+    var textures = ['lotrec.jpg','starrynight.jpg','leopard.png','black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
     for (i in textures){
       var image = new Image();
       image.src = "assets/textures/" + textures[i];
