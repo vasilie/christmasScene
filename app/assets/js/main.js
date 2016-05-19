@@ -31,16 +31,17 @@
 
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     mirrorCamera = new THREE.CubeCamera( 1, 10, 1024);
-    camera.position.set(0, 2 ,7);
+    camera.position.set(7.59195005741784, 1.4453954384859604 ,3.6399825559441346);
     camera.rotation.x = -Math.PI / 12;
 
     scene.add(camera);
     controls = new THREE.OrbitControls( camera, renderer.domElement );
-				controls.target.set(0,0,0);
-				controls.update();
-        // camera.position.set(21, 7, 18);
-        // camera.lookAt(0,0,0);
-
+		controls.target.set(0,0,0);
+		controls.update();
+    controls.maxPolarAngle = Math.PI/2-0.094;
+    controls.enablePan = false;
+    controls.maxDistance = 13;
+    controls.minDistance = 5.5;
 
 
     light = new THREE.DirectionalLight(0xffffff);
@@ -94,12 +95,35 @@
 				mirrorMesh.rotateX( - Math.PI / 2 );
 				scene.add( mirrorMesh );
     var currentTexture = 0;
+    var images = [];
     var textures = ['black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
+    for (i in textures){
+      var image = new Image();
+      image.src = "assets/textures/" + textures[i];
+      images.push(image);
+    }
     var mainTexture = textures[currentTexture];
     texture.needsUpdate = true;
     function changeTexture(){
-      currentTexture++;
-      currentTexture = currentTexture % textures.length;
+      if (arguments.length >0){
+        switch (arguments[0]) {
+          case "black":
+            currentTexture = 0;
+            break;
+          case "white":
+            currentTexture = 8;
+            break;
+
+          case "silver":
+            currentTexture = 1;
+            break;
+          default:
+        }
+      } else {
+        currentTexture++;
+        currentTexture = currentTexture % textures.length;
+      }
+      console.log(arguments)
       mainTexture = textures[currentTexture];
       mesh.material.map = THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture);
     }
@@ -205,9 +229,8 @@
       // scene.add( new THREE.CameraHelper( light.shadow.camera ) );
       // scene.add( new THREE.CameraHelper( mirrorCamera) );
 
-      camera.position.z = 15
       floor.receiveShadow = true;
-      camera.lookAt(0,0,0);
+      camera.lookAt(mesh.position);
       mesh.receiveShadow = true;
       mesh.castShadow = true;
       mesh.rotation.z = 0;

@@ -4,13 +4,84 @@
 <meta charset="UTF-8">
 <title></title>
 <link rel="stylesheet" href="/css/main.css"/>
+<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+<style>
+  body {
+    font-family: "Roboto", sans-serif;
+    color:#333;
+    font-weight: 300;
+    overflow: hidden;
+  }
+  .viewport__container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .controls-panel {
+    position: absolute;
+    right:0;
+    top:0;
+    width: 400px;
+    border:1px solid #333;
+    height: 500px;
+  }
+  h2, h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  ul {
+    margin:0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+  }
+  li {
+    list-style-type: none;
+    display: inline-block;
+    margin:10px;
+  }
+  .button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid rgb(210, 210, 210);
+    cursor: pointer;
+  }
+  .black {
+    background: #333;
+  }
+  .silver {
+    background: #cccccc;
+  }
+  .random {
+    background-image: url(assets/img/random.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+</style>
 </head>
 <body>
-<div class="viewport"></div>
+<div class="viewport__container">
+  <div class="viewport"></div>
+  <div class="controls-panel">
+    <h2>Pick a color</h2>
+    <ul>
+      <li><div class="button black" onClick='changeTexture("black")'></div></li>
+      <li><div class="button white" onClick='changeTexture("white")'></div> </li>
+      <li><div class="button silver" onClick='changeTexture("silver")'></div></li>
+    </ul>
+    <h3>Random</h3>
+    <ul>
+      <li><div class="button random" onClick='changeTexture()'></div> </li>
+    </ul>
+  </div>
+</div>
+<script src='bower_components/jquery/dist/jquery.js'></script>
 <script src="vendor/three.min.js"></script>
 <script src="vendor/orbitControls.js"></script>
 <script src="vendor/mirror.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/texture-controls.js"></script>
 <script>
 
   </script>
