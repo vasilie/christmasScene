@@ -19,14 +19,14 @@
     scene.rotation.x = 0;
     scene.rotation.y = 0;
     scene.rotation.z = 0;
-    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer = new THREE.WebGLRenderer({antialias: true, alpha:true});
 
     renderer.setSize(WIDTH, HEIGHT);
     renderer.shadowMapEnabled = true;
     renderer.shadowMapSoft = true;
     renderer.shadowMapType = THREE.PCFShadowMap;
     renderer.shadowMapAutoUpdate = true;
-    renderer.setClearColor( 0xffffff, 1 );
+    renderer.setClearColor( 0x222222, 1 );
     container.appendChild(renderer.domElement);
 
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
@@ -81,6 +81,26 @@
     point.position.z = 5;
     loader = new THREE.JSONLoader();
     scene.add(mirrorCamera);
+    var polight = new THREE.PointLight( 0xff0000, 1, 100 );
+    polight.position.set( -0.5, 0.3, -0.8 );
+    scene.add( polight );
+    var geometry = new THREE.SphereGeometry(0.03, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
+    var material = new THREE.MeshBasicMaterial({ color: 0xff0000});
+    var cube = new THREE.Mesh(geometry, material);
+    polight.add(cube);
+    polight.position.set(-1,0.51,-1.4);
+    scene.add( polight );
+
+    var polight1 = new THREE.PointLight( 0x47de21, 1, 100 );
+    polight1.position.set( -0.5, 1.3, -0.8 );
+    scene.add( polight1 );
+    var geometry = new THREE.SphereGeometry(0.03, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
+    var material = new THREE.MeshBasicMaterial({ color: 0x47de21});
+    var cube1 = new THREE.Mesh(geometry, material);
+    polight1.add(cube1);
+    polight1.position.set(-1,1.51,-1.4);
+
+
     var mesh, container;
     var maxAnisotropy = renderer.getMaxAnisotropy();
     var floor_geometry = new THREE.BoxGeometry( 10, 0.001, 10);
@@ -96,7 +116,7 @@
 				scene.add( mirrorMesh );
     var currentTexture = 0;
     var images = [];
-    var textures = ['lotrec.jpg','starrynight.jpg','leopard.png','black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
+    var textures = ['branch1.png','branch.png','lotrec.jpg','starrynight.jpg','leopard.png','black.jpg','silver.jpg','abstract.jpg','wall.jpg','metal.jpg','wood.jpg','blood.jpg', 'blue.jpg', 'mermer.jpg', 'minecraft.png','second.jpg', 'greenmarble.jpg','first.jpg','musema.jpg'];
     for (i in textures){
       var image = new Image();
       image.src = "assets/textures/" + textures[i];
@@ -127,9 +147,18 @@
       mainTexture = textures[currentTexture];
       mesh.material.map = THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture);
     }
+    var loader1 = new THREE.JSONLoader();
 
-    loader.load('assets/models/stand.json', function (geometry, materials) {
-      var material = new THREE.MeshLambertMaterial({
+    // load a resource
+
+
+
+
+
+
+
+    loader.load('assets/models/christmas_tree_cycles.json', function (geometry, materials) {
+      var material = new THREE.MeshPhongMaterial({
         map: THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture),
         // color: 0xCCCCCC
       });
