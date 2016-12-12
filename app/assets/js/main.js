@@ -3,7 +3,7 @@
     var WIDTH, HEIGHT, VIEW_ANGLE, ASPECT, NEAR, FAR;
 
     container = document.querySelector('.viewport');
-
+var particles = [];
     clock = new THREE.Clock();
 
     WIDTH = window.innerWidth,
@@ -25,6 +25,7 @@
     renderer.shadowMapEnabled = true;
     renderer.shadowMapSoft = true;
     renderer.shadowMapType = THREE.PCFShadowMap;
+    // renderer.sortObjects = false;
     renderer.shadowMapAutoUpdate = true;
     renderer.setClearColor( 0x222222, 1 );
     container.appendChild(renderer.domElement);
@@ -81,24 +82,24 @@
     point.position.z = 5;
     loader = new THREE.JSONLoader();
     scene.add(mirrorCamera);
-    var polight = new THREE.PointLight( 0xff0000, 1, 100 );
-    polight.position.set( -0.5, 0.3, -0.8 );
-    scene.add( polight );
-    var geometry = new THREE.SphereGeometry(0.03, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
-    var material = new THREE.MeshBasicMaterial({ color: 0xff0000});
-    var cube = new THREE.Mesh(geometry, material);
-    polight.add(cube);
-    polight.position.set(-1,0.51,-1.4);
-    scene.add( polight );
-
-    var polight1 = new THREE.PointLight( 0x47de21, 1, 100 );
-    polight1.position.set( -0.5, 1.3, -0.8 );
-    scene.add( polight1 );
-    var geometry = new THREE.SphereGeometry(0.03, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
-    var material = new THREE.MeshBasicMaterial({ color: 0x47de21});
-    var cube1 = new THREE.Mesh(geometry, material);
-    polight1.add(cube1);
-    polight1.position.set(-1,1.51,-1.4);
+    // var polight = new THREE.PointLight( 0xff0000, 1, 100 );
+    // polight.position.set( -0.5, 0.3, -0.8 );
+    // scene.add( polight );
+    // var geometry = new THREE.SphereGeometry(0.02, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
+    // var material = new THREE.MeshBasicMaterial({ color: 0xff0000});
+    // var cube = new THREE.Mesh(geometry, material);
+    // polight.add(cube);
+    // polight.position.set(-1,0.51,-1.4);
+    // scene.add( polight );
+    //
+    // var polight1 = new THREE.PointLight( 0x47de21, 1, 100 );
+    // polight1.position.set( -0.5, 1.3, -0.8 );
+    // scene.add( polight1 );
+    // var geometry = new THREE.SphereGeometry(0.02, 10, 40, 0, Math.PI * 2, 0, Math.PI * 2);
+    // var material = new THREE.MeshBasicMaterial({ color: 0x47de21});
+    // var cube1 = new THREE.Mesh(geometry, material);
+    // polight1.add(cube1);
+    // polight1.position.set(-1,1.51,-1.4);
 
 
     var mesh, container;
@@ -159,7 +160,7 @@
 
     loader.load('assets/models/christmas_tree_cycles.json', function (geometry, materials) {
       var material = new THREE.MeshPhongMaterial({
-        map: THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture),
+        map: THREE.ImageUtils.loadTexture('assets/textures/'+mainTexture), transparent:true, opacity:1, side:THREE.DoubleSide, depthWrite:false
         // color: 0xCCCCCC
       });
       mesh = new THREE.Mesh(
@@ -168,86 +169,111 @@
       );
       scene.add(mesh);
 
-          // LINES
-          // var material = new THREE.LineBasicMaterial({
-          // 	color: 0x0000ff
-          // });
-          //
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          // 	new THREE.Vector3( 0.12, -0.253, -0.9 ),
-          // 	new THREE.Vector3( 0.12, -0.253,-1.05 )
-          // 	// new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-	        // mesh.add(line);
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3( 0.12, 2.57,  -0.9 ),
-          //   new THREE.Vector3( 0.12, 2.57,-1.05 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(2.084, 2.57,  -0.9 ),
-          //   new THREE.Vector3( 2.084, 2.57,-1.05 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(2.084, -0.253,  -0.9 ),
-          //   new THREE.Vector3( 2.084, -0.253,-1.05 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(0.12, 2.57,  -1 ),
-          //   new THREE.Vector3( 2.084, 2.57,-1 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(0.12, -0.253,  -1 ),
-          //   new THREE.Vector3( 0.12, 2.57,-1 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          //
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(0.12, -0.3,  -0.87 ),
-          //   new THREE.Vector3( 0.12, -0.48,-0.87 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          //
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(0.12, -0.3,  -0.031 ),
-          //   new THREE.Vector3( 0.12, -0.48,-0.031 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
-          //
-          // var geometry = new THREE.Geometry();
-          // geometry.vertices.push(
-          //   new THREE.Vector3(0.12, -0.42,  -0 ),
-          //   new THREE.Vector3( 0.12, -0.42, -0.87 )
-          //   // new THREE.Vector3( 0, 0, 0 )
-          // );
-          // var line = new THREE.Line( geometry, material );
-          // mesh.add(line);
+
+
+//////////////////////
+// Snowing  scene
+//////////////
+var TO_RADIANS = Math.PI / 180;
+
+Particle3D = function(material) {
+    THREE.Particle.call(this, material);
+
+    //this.material = material instanceof Array ? material : [ material ];
+    // define properties
+    this.velocity = new THREE.Vector3(0, -0.03, 0);
+    this.velocity.rotateX(randomRange(-45, 45));
+    this.velocity.rotateY(randomRange(0, 360));
+    this.gravity = new THREE.Vector3(0, 0, 0);
+    this.drag = 1;
+    // methods...
+};
+
+Particle3D.prototype = new THREE.Sprite();
+Particle3D.prototype.constructor = Particle3D;
+Particle3D.prototype.updatePhysics = function() {
+    this.velocity.multiplyScalar(this.drag);
+    this.velocity.add(this.gravity);
+    this.position.add(this.velocity);
+}
+
+THREE.Vector3.prototype.rotateY = function(angle) {
+    cosRY = Math.cos(angle * TO_RADIANS);
+    sinRY = Math.sin(angle * TO_RADIANS);
+
+    var tempz = this.z;;
+    var tempx = this.x;
+
+    this.x = (tempx * cosRY) + (tempz * sinRY);
+    this.z = (tempx * -sinRY) + (tempz * cosRY);
+}
+
+THREE.Vector3.prototype.rotateX = function(angle) {
+    cosRY = Math.cos(angle * TO_RADIANS);
+    sinRY = Math.sin(angle * TO_RADIANS);
+
+    var tempz = this.z;;
+    var tempy = this.y;
+
+    this.y = (tempy * cosRY) + (tempz * sinRY);
+    this.z = (tempy * -sinRY) + (tempz * cosRY);
+}
+
+THREE.Vector3.prototype.rotateZ = function(angle) {
+    cosRY = Math.cos(angle * TO_RADIANS);
+    sinRY = Math.sin(angle * TO_RADIANS);
+
+    var tempx = this.x;;
+    var tempy = this.y;
+
+    this.y = (tempy * cosRY) + (tempx * sinRY);
+    this.x = (tempy * -sinRY) + (tempx * cosRY);
+}
+
+// returns a random number between the two limits provided
+
+function randomRange(min, max) {
+    return ((Math.random() * (max - min)) + min);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+var particle;
+
+var particleImage = new Image();
+particleImage.src = 'assets/textures/snowflake.png';
+var particle_material = new THREE.SpriteMaterial( { map: new THREE.ImageUtils.loadTexture('assets/textures/snowflake.png'), transparent: true } );
+
+
+for (var i = 0; i < 500; i++) {
+
+    particle = new Particle3D(particle_material);
+    particle.position.x = Math.random() * 20 - 10;
+    particle.position.y = Math.random() * 40 - 10;
+    particle.position.z = Math.random() * 20 - 10;
+    particle.scale.x = particle.scale.y =  0.05;
+    scene.add( particle );
+
+    particles.push(particle);
+}
+
+
+
+
+
+
+
+
+
       floor = new THREE.Mesh(
         floor_geometry,
         floor_material
@@ -290,6 +316,23 @@
       mirrorCamera.rotation.set (0,0,0);
       // mirrorCamera.rotation = floor.rotation;
       // mirrorCamera.updateTextureMatrix();
+//////////////
+// Render Snow
+////////////
+for(var i = 0; i<particles.length; i++) {
+    var particle = particles[i];
+    particle.updatePhysics();
+
+    with(particle.position) {
+        if(y<-1) y+=10;
+        if(x>10) x-=20;
+        else if(x<-10) x+=20;
+        if(z>10) z-=20;
+        else if(z<-10) z+=20;
+    }
+}
+
+
 
       //Render the scene
       groundMirror.updateTextureMatrix();
